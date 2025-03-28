@@ -1,19 +1,50 @@
 #include "../include/warmup_solver.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#define OUTPUT_DIR "output/"
+#define SOLUTION_FILE "solution.txt"
 
-const char OUTPUT_DIR[] = "output/";
-const char SOLUTION_FILE[] = "solution.txt";
+// Função para calcular o fatorial de um número
+int fatorial(int n) {
+    if (n == 0 || n == 1) return 1;
+    int resultado = 1;
+    for (int i = 2; i <= n; i++) {
+        resultado *= i;
+    }
+    return resultado;
+}
+
+// Função para encontrar o menor k
+int menor_k(int N) {
+    int k = 0;
+    // Lista de fatoriais precomputados até 9! (362880)
+    int fatoriais[10];
+    for (int i = 0; i < 10; i++) {
+        fatoriais[i] = fatorial(i);
+    }
+
+    // Começamos do maior fatorial possível e subtraímos de N
+    for (int i = 9; i >= 0; i--) {
+        while (N >= fatoriais[i]) {
+            N -= fatoriais[i];
+            k++;
+        }
+    }
+
+    return k;
+}
 
 void solve_warmup(FILE* ptr_in_file, char* file_name, const char* warmup_instance) {
 
-    FILE *froutptr, *fwsolptr;
-    char line[100];
+    FILE *fwsolptr;
     char out_file[100];
 
     out_file[0] = '\0';
     strcat(out_file, warmup_instance);
     strcat(out_file, OUTPUT_DIR);
     strcat(out_file, file_name);
-    
+
     // Creating solution file
     fwsolptr = fopen(SOLUTION_FILE, "w");
     if (fwsolptr == NULL) {
@@ -24,21 +55,11 @@ void solve_warmup(FILE* ptr_in_file, char* file_name, const char* warmup_instanc
     /* *****************************************
       Replace this code by your warmup solution
       ****************************************** */
+    int N;
+    fscanf(ptr_in_file, "%d", &N); // Lê o valor de N do arquivo de entrada
 
-    // Opening answer file
-    froutptr = fopen(out_file, "r");
-    if (froutptr == NULL) {
-        printf("File '%s' can't be opened\n", out_file);
-        exit(1);
-    }
-
-    // Reading from the answer file and writing to the solution file
-    while (fgets(line, 100, froutptr)) {
-        fputs(line, fwsolptr);
-    }
-
-    fclose(froutptr);
-
+    int resultado = menor_k(N); // Calcula o menor k
+    fprintf(fwsolptr, "%d\n", resultado); // Escreve o resultado no arquivo de solução
     /* *************************************** */
 
     fclose(fwsolptr);
@@ -73,6 +94,10 @@ int check_warmup_solution(const char* file_name, const char* warmup_instance) {
     while (fgets(answer_line, 100, fanswer)) {
 
         fgets(solution_line, 100, fsolution);
+
+        // Remove o caractere de nova linha (\n) das strings
+        answer_line[strcspn(answer_line, "\n")] = '\0';
+        solution_line[strcspn(solution_line, "\n")] = '\0';
 
         if (strcmp(answer_line, solution_line)) {
             is_correct = 0;
