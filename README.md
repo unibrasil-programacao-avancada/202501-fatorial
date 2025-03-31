@@ -41,8 +41,11 @@ Para executar o código:
 
 # Desempenho
 Instâncias 
+
 Sucesso:32
+
 Falhas:0
+
 Observação: O código base do WARMUP teve que ser alterado por conta duas últimas instâncias, que apresentavam falhas independente da alteração que era feita no código.
 
 ![Image](https://github.com/user-attachments/assets/3e5e9f20-ee7e-4111-ae4f-33f45fcb5814)
