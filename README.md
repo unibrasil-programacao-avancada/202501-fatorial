@@ -35,6 +35,7 @@ O arquivo de entrada contém um número N, e o arquivo de saída contém o menor
 No CodeBlocks entrar na pasta warmup.cbp para poder ter todas as partes necessárias para executar e compilar, depois entrar na pasta Solver e depois colocar o arquivo warmup_solver.c. No arquivo warmup_solver.c apertar F9 ou clicar no botão de execução e assim será executado o código.
 
 Para compilar o código:
+entrar na pasta WARMUP utilizando "cd warmup",
 gcc -Wall warmup.c solver/warmup_solver.c -o warmup
 Para executar o código:
 ./warmup
